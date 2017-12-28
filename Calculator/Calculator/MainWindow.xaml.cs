@@ -20,14 +20,19 @@ namespace Calculator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Calc calculator;
         public MainWindow()
         {
             InitializeComponent();
+            calculator = new Calc();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            Button pressedButton = (Button)sender;
+            string buttonTag = pressedButton.Tag.ToString();
+            calculator.PerformOperation(buttonTag);
+            outputTextBox.Text = calculator.CurrentNumber;
         }
     }
 }
