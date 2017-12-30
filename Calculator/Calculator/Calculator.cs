@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-    enum OperationName { Equals, Divide, Multiply, Substract, Add};
+    enum OperationName { Equals, Divide, Multiply, Substract, Add, Pow};
 
     class Operation
     {
-        public delegate double OperationMethod(double first, double second);
-        private OperationMethod methodName;
+        public delegate double BinaryOperationMethod(double first, double second);
+        private BinaryOperationMethod methodName;
         private string operationSign;
 
-        internal OperationMethod MethodName { get => methodName; set => methodName = value; }
+        internal BinaryOperationMethod MethodName { get => methodName; set => methodName = value; }
         public string OperationSign { get => operationSign; set => operationSign = value; }
 
-        public Operation(OperationMethod methodName, string operationSign)
+        public Operation(BinaryOperationMethod methodName, string operationSign)
         {
             this.MethodName = methodName;
             this.OperationSign = operationSign;
@@ -36,7 +36,15 @@ namespace Calculator
         private bool divideByZeroException;
         private OperationName currentOperation = OperationName.Equals;
 
-        public string OutputResult { get => outputResult; set { outputResult = value; currentNumber = outputResult; } }
+        public string OutputResult
+        {
+            get => outputResult;
+            set
+            {
+                outputResult = value;
+                currentNumber = outputResult;
+            }
+        }
 
         public string CurrentState { get => currentState; set => currentState = value; }
 
@@ -49,6 +57,7 @@ namespace Calculator
             operationList.Add(OperationName.Substract, new Operation(Substract, "-"));
             operationList.Add(OperationName.Multiply, new Operation(Multiply, "*"));
             operationList.Add(OperationName.Divide, new Operation(Divide, "/"));
+            operationList.Add(OperationName.Pow, new Operation(Pow, "^"));
         }
 
         public void PerformOperation(string parameter)
@@ -70,15 +79,36 @@ namespace Calculator
                 case "+":
                     CheckAndPerform(OperationName.Add);
                     break;
+                case "%":
+                    if (firstNumberExist)
+                    {
+                        secondNumber = firstNumber * (Convert.ToDouble(currentNumber)/100);
+                        string state = firstNumber + " " + operationList[currentOperation].OperationSign + " " + secondNumber;
+                        CheckAndPerform(OperationName.Equals);
+                        CurrentState = state;
+                    }
+                    break;
+                case "pow":
+                    CheckAndPerform(OperationName.Pow);
+                    break;
+                case "sqr":
+                    SquareRoot();
+                    break;
                 case "C":
                     ResetAll();
                     break;
                 default:
                     if (currentNumber == "0")
                     {
+                        if(parameter == ",")
+                        {
+                            OutputResult += parameter;
+                            break;
+                        }
                         OutputResult = parameter;
                         break;
                     }
+
                     if (OutputResult.Length > 15)
                     {
                         break;
@@ -99,6 +129,18 @@ namespace Calculator
             OutputResult = "0";
             currentState = "";
             divideByZeroException = false;
+        }
+
+        private string ToStringWithCheckLenght(double numberToCheck)
+        {
+            if (numberToCheck.ToString().Length > 15)
+            {
+               return numberToCheck.ToString("E10");
+            }
+            else
+            {
+                return numberToCheck.ToString();
+            }
         }
 
         private double Add(double first, double second)
@@ -126,7 +168,19 @@ namespace Calculator
             return (first / second);
         }
 
-        private delegate double OperationDelegate(double firstNumber, double secondNumber);
+        private double Pow(double number, double rise)
+        {
+            return (Math.Pow(number, rise));
+        }
+
+        private void SquareRoot()
+        {
+            if (!divideByZeroException)
+            {
+                CurrentState = "sqrt(" + OutputResult +")";
+                OutputResult = ToStringWithCheckLenght(Math.Sqrt(Convert.ToDouble(outputResult)));
+            }
+        }
 
         private void CheckAndPerform(OperationName selectedOperation)
         {
@@ -154,7 +208,8 @@ namespace Calculator
             currentOperation = selectedOperation;
             if (!firstNumberExist)
             {
-                firstNumber = Convert.ToDouble(outputResult);
+                Console.WriteLine(outputResult);
+                firstNumber = Convert.ToDouble(outputResult); //System.Globalization.CultureInfo.InvariantCulture.NumberFormat
                 currentState = outputResult + " " + operationList[currentOperation].OperationSign;
                 OutputResult = "0";
                 firstNumberExist = true;
@@ -163,8 +218,8 @@ namespace Calculator
             else
             {
                 secondNumber = Convert.ToDouble(outputResult);
-                OutputResult = operationList[currentOperation].MethodName(firstNumber, secondNumber).ToString();
-               
+                double result = operationList[currentOperation].MethodName(firstNumber, secondNumber);
+                OutputResult = ToStringWithCheckLenght(result);
                 currentState = "";
                 currentNumber = "0";
                 firstNumber = 0;

@@ -5,18 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
         mc:Ignorable="d"
-        Title="Calculator" Height="250" Width="240" ResizeMode="NoResize">
+        Title="Calculator" Height="330" Width="300" ResizeMode="NoResize">
     <Grid>
         <StackPanel Background="Azure">
             <Grid>
-                <TextBox Height="40" Margin="6,10,6,0" HorizontalAlignment="Stretch" Padding="0,10,0,0"
+                <TextBox Height="50" Margin="6,10,6,0" HorizontalAlignment="Stretch" Padding="0,10,0,0"
                      TextWrapping="Wrap" TextAlignment="Right" Text="0" VerticalAlignment="Top" 
-                     BorderThickness="2" BorderBrush="Black" Name="outputTextBox" FontSize="18" 
+                     BorderThickness="2" BorderBrush="Black" Name="outputTextBox" FontSize="29" 
                      FontWeight="Bold" IsReadOnly="true" />
-                <TextBlock x:Name="currentStateBlock" Text="" Margin="10,10,15,10" TextAlignment="Right"></TextBlock>
+                <TextBlock x:Name="currentStateBlock" FontSize="15" Text="" Margin="10" TextAlignment="Right" HorizontalAlignment="Stretch"></TextBlock>
             </Grid>
-            <Grid Margin="5,5,5,0" Height="150">
+            <Grid Margin="5,5,5,0" Height="220">
                 <Grid.ColumnDefinitions >
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -27,39 +28,52 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Button Content="1"  Margin="2,2,2,2" FontSize="18" 
+                    </Grid.RowDefinitions>
+                <Button Content="1"  Margin="2,2,2,2" FontSize="29" VerticalContentAlignment="Top"
                         FontWeight="Bold" Grid.Column="0" Grid.Row="0" Click="Button_Click" Tag="1"></Button>
-                <Button Content="2" Margin="2,2,2,2" FontSize="18" 
+                <Button Content="2" Margin="2,2,2,2" FontSize="29" 
                         FontWeight="Bold" Grid.Column="1" Grid.Row="0" Click="Button_Click" Tag="2"></Button>
-                <Button Content="3" Margin="2,2,2,2" FontSize="18" 
+                <Button Content="3" Margin="2,2,2,2" FontSize="29" 
                         FontWeight="Bold" Grid.Column="2" Grid.Row="0" Click="Button_Click" Tag="3"></Button>
-                <Button Content="4" Margin="2,2,2,2" FontSize="18" 
+                <Button Content="4" Margin="2,2,2,2" FontSize="29" 
                         FontWeight="Bold" Grid.Column="0" Grid.Row="1" Click="Button_Click" Tag="4"></Button>
-                <Button Content="5" Margin="2,2,2,2" FontSize="18" 
+                <Button Content="5" Margin="2,2,2,2" FontSize="29" 
                         FontWeight="Bold" Grid.Column="1" Grid.Row="1" Click="Button_Click" Tag="5"></Button>
-                <Button Content="6" Margin="2,2,2,2" FontSize="18" 
+                <Button Content="6" Margin="2,2,2,2" FontSize="29" 
                         FontWeight="Bold" Grid.Column="2" Grid.Row="1" Click="Button_Click" Tag="6"></Button>
-                <Button Content="7" Margin="2,2,2,2" FontSize="18" 
+                <Button Content="7" Margin="2,2,2,2" FontSize="29" 
                         FontWeight="Bold" Grid.Column="0" Grid.Row="2" Click="Button_Click" Tag="7"></Button>
-                <Button Content="8" Margin="2,2,2,2" FontSize="18" 
+                <Button Content="8" Margin="2,2,2,2" FontSize="29" 
                         FontWeight="Bold" Grid.Column="1" Grid.Row="2" Click="Button_Click" Tag="8"></Button>
-                <Button Content="9" Margin="2,2,2,2" FontSize="18" 
+                <Button Content="9" Margin="2,2,2,2" FontSize="29" 
                         FontWeight="Bold" Grid.Column="2" Grid.Row="2" Click="Button_Click" Tag="9"></Button>
-                <Button Content="0" Margin="2,2,2,2" FontSize="18" 
+                <Button Content="0" Margin="2,2,2,2" FontSize="29" 
                         FontWeight="Bold" Grid.Column="0" Grid.Row="3" Click="Button_Click" Tag="0"></Button>
-                <Button Content="C" Margin="2,2,2,2" FontSize="18" 
-                        FontWeight="Bold" Grid.Column="1" Grid.Row="3" Click="Button_Click" Tag="C"></Button>
-                <Button Content="=" Margin="2,2,2,2" FontSize="18" 
+                <Button Content="C" Margin="2,2,2,2" FontSize="29" 
+                        FontWeight="Bold" Grid.Column="5" Grid.Row="0" Click="Button_Click" Tag="C"></Button>
+                <Button Content="=" Margin="2,2,2,2" FontSize="29" 
                         FontWeight="Bold" Grid.Column="2" Grid.Row="3" Click="Button_Click" Tag="="></Button>
-                <Button Content="/" Margin="2,2,2,2" FontSize="18" 
+                <Button Content="/" Margin="2,2,2,2" FontSize="29" 
                         FontWeight="Bold" Grid.Column="3" Grid.Row="0" Click="Button_Click" Tag="/"></Button>
-                <Button Content="*" Margin="2,2,2,2" FontSize="18" 
+                <Button Content="*" Margin="2,2,2,2" FontSize="29" 
                         FontWeight="Bold" Grid.Column="3" Grid.Row="1" Click="Button_Click" Tag="*"></Button>
-                <Button Content="-" Margin="2,2,2,2" FontSize="18" 
+                <Button Content="-" Margin="2,2,2,2" FontSize="29" 
                         FontWeight="Bold" Grid.Column="3" Grid.Row="2" Click="Button_Click" Tag="-"></Button>
-                <Button Content="+" Margin="2,2,2,2" FontSize="18" 
+                <Button Content="+" Margin="2,2,2,2" FontSize="29" 
                         FontWeight="Bold" Grid.Column="3" Grid.Row="3" Click="Button_Click" Tag="+"></Button>
+                <Button Content="," Margin="2,2,2,2" FontSize="29" 
+                        FontWeight="Bold" Grid.Column="1" Grid.Row="30" Click="Button_Click" Tag=","></Button>
+                <Button  Margin="2,2,2,2" FontSize="29" 
+                        FontWeight="Bold" Grid.Column="5" Grid.Row="1" Click="Button_Click" Tag="pow">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock >x</TextBlock>
+                        <TextBlock FontSize="17">y</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Content="&#x221a;" Margin="2,2,2,2" FontSize="29" 
+                        FontWeight="Bold" Grid.Column="5" Grid.Row="2" Click="Button_Click" Tag="sqr"></Button>
+                <Button Content="%" Margin="2,2,2,2" FontSize="29" 
+                        FontWeight="Bold" Grid.Column="5" Grid.Row="3" Click="Button_Click" Tag="%"></Button>
 
             </Grid>
         </StackPanel>
