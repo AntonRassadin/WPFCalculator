@@ -32,7 +32,8 @@ namespace Calculator
             Button pressedButton = (Button)sender;
             string buttonTag = pressedButton.Tag.ToString();
             calculator.PerformOperation(buttonTag);
-            outputTextBox.Text = calculator.CurrentNumber;
+            outputTextBox.Text = calculator.OutputResult;
+            this.currentStateBlock.Text = calculator.CurrentState;
         }
     }
 }
