@@ -80,13 +80,7 @@ namespace Calculator
                     CheckAndPerform(OperationName.Add);
                     break;
                 case "%":
-                    if (firstNumberExist)
-                    {
-                        secondNumber = firstNumber * (Convert.ToDouble(currentNumber)/100);
-                        string state = firstNumber + " " + operationList[currentOperation].OperationSign + " " + secondNumber;
-                        CheckAndPerform(OperationName.Equals);
-                        CurrentState = state;
-                    }
+                    Percent();
                     break;
                 case "pow":
                     CheckAndPerform(OperationName.Pow);
@@ -97,26 +91,65 @@ namespace Calculator
                 case "C":
                     ResetAll();
                     break;
+                case ",":
+                    if (!CheckForComma())
+                    {
+                        OutputResult += parameter;
+                    }
+                    break;
                 default:
-                    if (currentNumber == "0")
+                    if (CheckForZero())
                     {
-                        if(parameter == ",")
-                        {
-                            OutputResult += parameter;
-                            break;
-                        }
                         OutputResult = parameter;
-                        break;
                     }
-
-                    if (OutputResult.Length > 15)
+                    else if (!CheckLenghtOverflow())
                     {
-                        break;
+                        OutputResult += parameter;
                     }
-                    OutputResult += parameter;
                     break;
             }
  
+        }
+
+        private bool CheckLenghtOverflow()
+        {
+            if (OutputResult.Length > 15)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool CheckForZero()
+        {
+            if (OutputResult == "0")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool CheckForComma()
+        {
+            for (int i = 0; i < outputResult.Length; i++)
+            {
+                if (outputResult[i] == ',')
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void Percent()
+        {
+            if (firstNumberExist)
+            {
+                secondNumber = firstNumber * (Convert.ToDouble(currentNumber) / 100);
+                string state = firstNumber + " " + operationList[currentOperation].OperationSign + " " + secondNumber;
+                CheckAndPerform(OperationName.Equals);
+                CurrentState = state;
+            }
         }
 
         private void ResetAll()
@@ -135,7 +168,10 @@ namespace Calculator
         {
             if (numberToCheck.ToString().Length > 15)
             {
-               return numberToCheck.ToString("E10");
+                if (numberToCheck > 999999999999999)
+                    return numberToCheck.ToString("E10");
+                else
+                    return numberToCheck.ToString("G");
             }
             else
             {
@@ -193,10 +229,6 @@ namespace Calculator
             {
                 currentOperationIsNotOver = false;
                 CheckAndPerform(currentOperation);
-                if (divideByZeroException)
-                {
-                    return;
-                }
             }
 
             if (selectedOperation == OperationName.Equals)
