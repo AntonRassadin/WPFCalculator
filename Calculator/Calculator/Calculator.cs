@@ -220,15 +220,15 @@ namespace Calculator
 
         private void CheckAndPerform(OperationName selectedOperation)
         {
-            if (divideByZeroException)
-            {
-                return;
-            }
-
             if (currentOperationIsNotOver)
             {
                 currentOperationIsNotOver = false;
                 CheckAndPerform(currentOperation);
+            }
+
+            if (divideByZeroException)
+            {
+                return;
             }
 
             if (selectedOperation == OperationName.Equals)
