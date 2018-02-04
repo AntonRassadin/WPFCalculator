@@ -74,7 +74,14 @@ namespace Calculator
                     CheckAndPerform(OperationName.Multiply);
                     break;
                 case "-":
-                    CheckAndPerform(OperationName.Substract);
+                    if(CheckForZero())
+                    {
+                        OutputResult = parameter;
+                    }
+                    else
+                    {
+                        CheckAndPerform(OperationName.Substract);
+                    }
                     break;
                 case "+":
                     CheckAndPerform(OperationName.Add);
@@ -147,6 +154,7 @@ namespace Calculator
             {
                 secondNumber = firstNumber * (Convert.ToDouble(currentNumber) / 100);
                 string state = firstNumber + " " + operationList[currentOperation].OperationSign + " " + secondNumber;
+                outputResult = secondNumber.ToString();
                 CheckAndPerform(OperationName.Equals);
                 CurrentState = state;
             }
